@@ -31,8 +31,8 @@ AddProject(
 
 AddProject(
   unitree_sdk2
-  GITHUB isri-aist/unitree_sdk2
-  GIT_TAG aist/devel-mc_unitree2
+  GITHUB bastien-muraccioli/unitree_sdk2
+  GIT_TAG bastien/devel-mc_unitree2
 )
 
 ExternalProject_Get_Property(unitree_sdk2 SOURCE_DIR)
