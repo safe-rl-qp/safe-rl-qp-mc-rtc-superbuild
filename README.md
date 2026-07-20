@@ -8,6 +8,11 @@ Acc-CBF-QP was introduced in:
 
 Part of the Acc-CBF-QP ecosystem: [paper implementation](https://github.com/safe-rl-qp/mc-safe-rl-qp) · superbuild (this repo) · [controller template](https://github.com/bastien-muraccioli/new-rl-qp-controller) · [community controllers](https://github.com/safe-rl-qp/awesome-safe-rl-qp)
 
+[![CI](https://github.com/safe-rl-qp/safe-rl-qp-mc-rtc-superbuild/actions/workflows/ubuntu24-install-test.yml/badge.svg)](https://github.com/safe-rl-qp/safe-rl-qp-mc-rtc-superbuild/actions/workflows/ubuntu24-install-test.yml)
+[![Ubuntu 24.04](https://img.shields.io/badge/Ubuntu-24.04-E95420)](https://github.com/safe-rl-qp/safe-rl-qp-mc-rtc-superbuild#installation)
+[![Project Page](https://img.shields.io/badge/Project_Page-Visit-blue.svg)](https://safe-rl-qp.github.io/)
+[![PDF](https://img.shields.io/badge/PDF-arXiv-b31b1b.svg)](https://arxiv.org/abs/2607.14488)
+
 ## Contents
 
 - [Overview](#overview)

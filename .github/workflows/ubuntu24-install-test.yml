@@ -43,7 +43,7 @@ jobs:
           cmake --preset release-notests
           cmake --build --preset release-notests
           cmake --preset release-notests -DWITH_H1=ON
-          cmake --build --preset release-notests -DCMAKE_BUILD_TYPE=Release
+          cmake --build --preset release-notests
 
       - name: Write mc_rtc controller config
         run: |
