@@ -29,8 +29,11 @@ jobs:
       # actions/checkout needs git already present, but a bare ubuntu:24.04
       # image doesn't have it — install it before checkout can run.
       - name: Install git (needed before actions/checkout can run)
+        env:
+          DEBIAN_FRONTEND: noninteractive  # Prevents tzdata from prompting for input
         run: |
           apt-get update
+          apt-get install -y tzdata
           apt-get install -y --no-install-recommends git ca-certificates
 
       - name: Checkout
@@ -49,6 +52,8 @@ jobs:
 
       - name: Build superbuild with H1 enabled
         run: |
+          cmake --preset relwithdebinfo
+          cmake --build --preset relwithdebinfo
           cmake --preset relwithdebinfo -DWITH_H1=ON
           cmake --build --preset relwithdebinfo
 
@@ -66,20 +71,21 @@ jobs:
         run: apt-get install -y --no-install-recommends xvfb
 
       - name: Run mc_mujoco for 5s and check it doesn't crash
+        shell: bash
         run: |
           source ../install/setup_mc_rtc.sh
-          # mc_mujoco must be run from the folder containing the policy to
-          # run, not from an arbitrary directory (same requirement as the
-          # README's "Running a controller" section).
           cd ../src/rl_controller/policy/
           set +e
-          xvfb-run -a timeout 5 mc_mujoco --sync
+          xvfb-run -a timeout -k 10 5 mc_mujoco --sync
           code=$?
           set -e
-          # 124 = timeout killed it after 5s while still running (success case).
+          # 124 = SIGTERM timeout, process exited on its own (success case).
+          # 137 = 128+9, process ignored SIGTERM and had to be SIGKILL'd
+          #       after the -k grace period (also treated as success — it
+          #       just means mc_mujoco doesn't shut down cleanly on SIGTERM).
           # 0   = it exited cleanly on its own (also fine).
           # anything else = it crashed or errored out.
-          if [ "$code" -ne 0 ] && [ "$code" -ne 124 ]; then
+          if [ "$code" -ne 0 ] && [ "$code" -ne 124 ] && [ "$code" -ne 137 ]; then
             echo "mc_mujoco exited with code $code — treating as failure"
             exit 1
           fi

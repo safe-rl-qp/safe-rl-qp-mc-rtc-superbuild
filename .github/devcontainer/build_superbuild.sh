@@ -22,7 +22,7 @@ else
   # to run), instead of requiring a manual ccmake + rebuild step inside
   # the container afterward. Drop it if you want a lighter/faster image.
   echo "SUPERBUILD: Configuring superbuild with preset $CMAKE_PRESET"
-  cmake --preset $CMAKE_PRESET -DSUPERBUILD_OVERRIDE_SHELL="zsh" -DWITH_H1=ON
+  cmake --preset $CMAKE_PRESET -DSUPERBUILD_OVERRIDE_SHELL="zsh"
   # Build the whole superbuild
   echo "SUPERBUILD: Building the superbuild"
   cmake --build --preset $CMAKE_PRESET

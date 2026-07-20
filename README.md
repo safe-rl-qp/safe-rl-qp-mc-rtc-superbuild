@@ -79,6 +79,7 @@ By default, the presets will:
 ```bash
 cd ~/workspace/safe-rl-qp-mc-rtc-superbuild
 # Build all projects
+cmake --preset relwithdebinfo
 cmake --build --preset relwithdebinfo
 ```
 

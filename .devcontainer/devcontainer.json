@@ -14,7 +14,12 @@
       "CMAKE_PRESET": "${localEnv:CMAKE_PRESET:relwithdebinfo}",
       "BUILD_VERSION": "${localEnv:BUILD_VERSION:devcontainer}",
       "IMAGE_SOURCE_REPO": "",
-      "UBUNTU_VERSION": "noble"
+      "UBUNTU_VERSION": "noble",
+      "SUPERBUILD_DIR": "/home/vscode/workspace/safe-rl-qp-mc-rtc-superbuild",
+      "WORKSPACE_DIR": "/home/vscode/workspace",
+      "WORKSPACE_SRC_DIR": "/home/vscode/workspace/src",
+      "WORKSPACE_BUILD_DIR": "/home/vscode/workspace/build",
+      "WORKSPACE_INSTALL_DIR": "/home/vscode/workspace/install"
     }
     // If you need SSH agent forwarding during the build (e.g. to clone
     // private controller repos via GITHUB_PRIVATE in the superbuild
@@ -23,14 +28,10 @@
   },
 
   "mounts": [
-    "type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix,consistency=cached"
-    // By default, src/build/install live inside the container only and are
-    // lost on rebuild (matches upstream's original default). Uncomment and
-    // point at host folders if you want build output to persist across
-    // container rebuilds:
-    // "source=${localEnv:HOME}${localEnv:USERPROFILE}/mc-rtc-superbuild-src,target=/home/vscode/src,type=bind,consistency=cached",
-    // "source=${localEnv:HOME}${localEnv:USERPROFILE}/mc-rtc-superbuild-build,target=/home/vscode/build,type=bind,consistency=cached",
-    // "source=${localEnv:HOME}${localEnv:USERPROFILE}/mc-rtc-superbuild-install,target=/home/vscode/install,type=bind,consistency=cached"
+    "type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix,consistency=cached",
+    "source=${localWorkspaceFolder}/../src,target=/home/vscode/workspace/src,type=bind,consistency=cached",
+    "source=${localWorkspaceFolder}/../build,target=/home/vscode/workspace/build,type=bind,consistency=cached",
+    "source=${localWorkspaceFolder}/../install,target=/home/vscode/workspace/install,type=bind,consistency=cached"
   ],
 
   "runArgs": [
@@ -49,8 +50,8 @@
   },
 
   "remoteUser": "vscode",
-  "workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/superbuild,type=bind",
-  "workspaceFolder": "/home/vscode/superbuild",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/workspace/${localWorkspaceFolderBasename},type=bind",
+  "workspaceFolder": "/home/vscode/workspace/${localWorkspaceFolderBasename}",
 
   "features": {
     "ghcr.io/devcontainers/features/node:1": {},
