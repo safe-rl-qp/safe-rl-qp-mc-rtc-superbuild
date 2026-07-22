@@ -4,7 +4,7 @@ if(NOT WITH_H1)
   return()
 endif()
 
-AptInstall(cmake g++ build-essential libyaml-cpp-dev libeigen3-dev libboost-all-dev libspdlog-dev libfmt-dev)
+AptInstall(libfmt-dev)
 
 AddCatkinProject(
   h1_description
@@ -19,7 +19,7 @@ if(mc_mujoco_FOUND)
   AddProject(
     h1_mj_description
     GITHUB bastien-muraccioli/h1_mj_description
-    GIT_TAG origin/safe-rl-qp
+    GIT_TAG origin/master
     DEPENDS mc_rtc
   )
 endif()
@@ -27,7 +27,7 @@ endif()
 AddProject(
   mc_h1
   GITHUB bastien-muraccioli/mc_h1
-  GIT_TAG origin/safe-rl-qp
+  GIT_TAG origin/main
   DEPENDS mc_rtc
 )
 
