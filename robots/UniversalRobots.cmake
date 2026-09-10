@@ -49,7 +49,7 @@ if(WITH_UR10
     AddCatkinProject(
       ur_description
       GITHUB UniversalRobots/Universal_Robots_ROS2_Description
-      GIT_TAG origin/humble
+      GIT_TAG origin/${ROS_DISTRO}
       WORKSPACE data_ws
     )
   else() # ROS1
