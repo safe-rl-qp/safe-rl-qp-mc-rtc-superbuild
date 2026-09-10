@@ -12,6 +12,8 @@ Part of the Acc-CBF-QP ecosystem: [paper implementation](https://github.com/safe
 [![Ubuntu 24.04](https://img.shields.io/badge/Ubuntu-24.04-E95420)](https://github.com/safe-rl-qp/safe-rl-qp-mc-rtc-superbuild#installation)
 [![Project Page](https://img.shields.io/badge/Project_Page-Visit-blue.svg)](https://safe-rl-qp.github.io/)
 [![PDF](https://img.shields.io/badge/PDF-arXiv-b31b1b.svg)](https://arxiv.org/abs/2607.14488)
+[![Award](https://img.shields.io/badge/IEEE%20IES-SYPA%20Award-gold)](https://2026.ieee-iros.org/attend/ies-sypa/)
+[![Watch the video](https://img.shields.io/badge/YouTube-IROS%202026%20Introduction-red?logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=MPlcEFUSASg)
 
 ## Contents
 
