@@ -84,6 +84,9 @@ By default, the presets will:
 - install all projects into `~/workspace/install`
 
 ```bash
+# Create the mc_rtc venv
+python3 -m venv --system-site-packages ~/.mc-rtc-venv
+source ~/.mc-rtc-venv/bin/activate
 cd ~/workspace/safe-rl-qp-mc-rtc-superbuild
 # Build all projects
 cmake --preset relwithdebinfo
@@ -126,13 +129,29 @@ You can also add the following aliases to your `.bashrc` to simplify using the f
 
 ```bash
 # Run the superbuild
-alias mc_build='cd ~/workspace/safe-rl-qp-mc-rtc-superbuild; cmake --build --preset relwithdebinfo'
+alias mc_build='source ~/.mc-rtc-venv/bin/activate; cd ~/workspace/safe-rl-qp-mc-rtc-superbuild; cmake --build --preset relwithdebinfo'
 
 # Config the superbuild
 alias mc_superbuild_config="cd ~/workspace/build/superbuild; ccmake ."
 
 # Automatically update the superbuild and all associated projects via git pull
-alias mc_update='cd ~/workspace/build/superbuild; cmake --build . --config RelWithDebInfo --target update'
+alias mc_update='
+modified_repos=""
+for dir in ~/workspace/src/*/; do
+    if [ -d "$dir/.git" ] && ! git -C "$dir" diff HEAD --quiet; then
+        modified_repos="$modified_repos$(basename "$dir")\n"
+    fi
+done
+
+if [ -n "$modified_repos" ]; then
+    echo "⚠️  The following repositories have local modifications and will be skipped by the update:"
+    printf "$modified_repos"
+    echo
+fi
+
+cd ~/workspace/build/superbuild &&
+cmake --build . --config RelWithDebInfo --target update
+'
 
 # Open the mc_rtc rviz interface
 alias mc_rviz="ros2 launch mc_rtc_ticker display.launch"
