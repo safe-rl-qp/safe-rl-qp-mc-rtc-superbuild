@@ -38,15 +38,14 @@ jobs:
       - name: Bootstrap
         run: ./utils/bootstrap-linux.sh
 
-      - name: mc_rtc venv setup
+      - name: Build superbuild with H1 enabled
+        shell: bash
         run: |
-          python3 -m venv --system-site-packages ~/.mc-rtc-venv
           source ~/.mc-rtc-venv/bin/activate
 
-      - name: Build superbuild with H1 enabled
-        run: |
           cmake --preset release-notests
           cmake --build --preset release-notests
+
           cmake --preset release-notests -DWITH_H1=ON
           cmake --build --preset release-notests
 

@@ -12,27 +12,17 @@
                 "SOURCE_DESTINATION": "${sourceDir}/../src",
                 "BUILD_DESTINATION": "${sourceDir}/../build",
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/../install",
-		"MC_RTC_SUPERBUILD_VERBOSE": "ON"
+		        "MC_RTC_SUPERBUILD_VERBOSE": "ON"
             }
         },
         {
-            "name": "relwithdebinfo-noros",
-            "displayName": "RelWithDebInfo (no ROS)",
+            "name": "relwithdebinfo-notests",
+            "displayName": "RelWithDebInfo (no tests)",
             "inherits": [
                 "relwithdebinfo"
             ],
             "cacheVariables": {
-                "WITH_ROS_SUPPORT": "OFF"
-            }
-        },
-        {
-            "name": "relwithdebinfo-nopython",
-            "displayName": "RelWithDebInfo (no Python)",
-            "inherits": [
-                "relwithdebinfo"
-            ],
-            "cacheVariables": {
-                "PYTHON_BINDING": "OFF"
+                "BUILD_TESTING": "OFF"
             }
         },
         {
@@ -65,27 +55,9 @@
             ]
         },
         {
-            "name": "relwithdebinfo-noros",
-            "displayName": "RelWithDebInfo",
-            "configurePreset": "relwithdebinfo-noros",
-            "configuration": "RelWithDebInfo",
-            "targets": [
-                "install"
-            ]
-        },
-        {
-            "name": "relwithdebinfo-nopython",
-            "displayName": "RelWithDebInfo",
-            "configurePreset": "relwithdebinfo-nopython",
-            "configuration": "RelWithDebInfo",
-            "targets": [
-                "install"
-            ]
-        },
-        {
-            "name": "relwithdebinfo-noros-nopython",
-            "displayName": "RelWithDebInfo",
-            "configurePreset": "relwithdebinfo-noros-nopython",
+            "name": "relwithdebinfo-notests",
+            "displayName": "RelWithDebInfo (no tests)",
+            "configurePreset": "relwithdebinfo-notests",
             "configuration": "RelWithDebInfo",
             "targets": [
                 "install"

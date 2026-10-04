@@ -84,8 +84,7 @@ By default, the presets will:
 - install all projects into `~/workspace/install`
 
 ```bash
-# Create the mc_rtc venv
-python3 -m venv --system-site-packages ~/.mc-rtc-venv
+# Source the mc_rtc venv created by the bootstrap script
 source ~/.mc-rtc-venv/bin/activate
 cd ~/workspace/safe-rl-qp-mc-rtc-superbuild
 # Build all projects
