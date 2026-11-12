@@ -12,7 +12,7 @@
                 "SOURCE_DESTINATION": "${sourceDir}/../workspace/devel",
                 "BUILD_DESTINATION": "${sourceDir}/../workspace/build/projects",
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/../workspace/install",
-		"MC_RTC_SUPERBUILD_VERBOSE": "ON"
+                "MC_RTC_SUPERBUILD_VERBOSE": "ON"
             }
         },
         {
@@ -54,6 +54,24 @@
             ],
             "cacheVariables": {
                 "BUILD_TESTING": "OFF"
+            }
+        },
+        {
+            "name": "release",
+            "inherits": [
+                "relwithdebinfo"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "release-notests",
+            "inherits": [
+                "relwithdebinfo-notests"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
             }
         }
     ],
@@ -99,6 +117,24 @@
             "displayName": "RelWithDebInfo (no tests)",
             "configurePreset": "relwithdebinfo-notests",
             "configuration": "RelWithDebInfo",
+            "targets": [
+                "install"
+            ]
+        },
+        {
+            "name": "release",
+            "displayName": "Release",
+            "configurePreset": "release",
+            "configuration": "Release",
+            "targets": [
+                "install"
+            ]
+        },
+        {
+            "name": "release-notests",
+            "displayName": "Release (no tests)",
+            "configurePreset": "release-notests",
+            "configuration": "Release",
             "targets": [
                 "install"
             ]

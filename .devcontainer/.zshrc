@@ -118,4 +118,10 @@ source $ZSH/oh-my-zsh.sh
 DISABLE_AUTO_UPDATE=true
 DISABLE_UPDATE_PROMPT=true
 
+alias mc_build='cd "$SUPERBUILD_DIR"; cmake --build --preset relwithdebinfo'
+alias mc_superbuild_config='cd "$WORKSPACE_BUILD_DIR/superbuild"; ccmake .'
+alias mc_update='cd "$WORKSPACE_BUILD_DIR/superbuild"; cmake --build . --config RelWithDebInfo --target update'
+alias mc_rviz="ros2 launch mc_rtc_ticker display.launch"
+alias mc_config="mkdir -p ~/.config/mc_rtc && code ~/.config/mc_rtc/mc_rtc.yaml"
+
 source $HOME/.entrypoint.sh

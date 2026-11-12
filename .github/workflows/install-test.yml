@@ -1,0 +1,89 @@
+name: Install + H1 RLController in MuJoCo
+
+on:
+  schedule:
+    - cron: '0 4 2,16 * *'
+  workflow_dispatch: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  install-test:
+    name: Ubuntu ${{ matrix.ubuntu }}
+    strategy:
+      # Keep testing the other versions when one fails
+      fail-fast: false
+      matrix:
+        ubuntu: ["22.04", "24.04"]
+    # Everything runs inside the container, the host runner version doesn't matter
+    runs-on: ubuntu-24.04
+    container:
+      image: ubuntu:${{ matrix.ubuntu }}
+
+    steps:
+      - name: Install git (needed before actions/checkout can run)
+        env:
+          DEBIAN_FRONTEND: noninteractive  # Prevents tzdata from prompting for input
+        run: |
+          apt-get update
+          apt-get install -y tzdata
+          apt-get install -y --no-install-recommends git ca-certificates
+          apt-get install locales && locale-gen en_US.UTF-8
+          export LANG=en_US.UTF-8
+
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Configure git identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Bootstrap
+        run: ./utils/bootstrap-linux.sh
+
+      # WITH_H1 is ON by default, so this is exactly the README's install flow
+      - name: Build superbuild
+        shell: bash
+        run: |
+          source ~/.mc-rtc-venv/bin/activate
+
+          cmake --preset release-notests
+          cmake --build --preset release-notests
+
+      - name: Write mc_rtc controller config
+        run: |
+          mkdir -p ~/.config/mc_rtc
+          cat > ~/.config/mc_rtc/mc_rtc.yaml << 'EOF'
+          MainRobot: H1
+          Enabled: RLController
+          Timestep: 0.0025
+          LogPolicy: threaded
+          EOF
+
+      - name: Install a virtual display for Mujoco
+        run: apt-get install -y --no-install-recommends xvfb
+
+      - name: Run mc_mujoco for 5s and check it doesn't crash
+        shell: bash
+        run: |
+          source ../workspace/install/setup_mc_rtc.sh
+          cd ../workspace/devel/rl_controller/policy/
+          set +e
+          xvfb-run -a timeout -k 10 5 mc_mujoco --sync
+          code=$?
+          set -e
+          # 124 = SIGTERM timeout, process exited on its own (success case).
+          # 137 = 128+9, process ignored SIGTERM and had to be SIGKILL'd
+          #       after the -k grace period (also treated as success — it
+          #       just means mc_mujoco doesn't shut down cleanly on SIGTERM).
+          # 0   = it exited cleanly on its own (also fine).
+          # anything else = it crashed or errored out.
+          if [ "$code" -ne 0 ] && [ "$code" -ne 124 ] && [ "$code" -ne 137 ]; then
+            echo "mc_mujoco exited with code $code — treating as failure"
+            exit 1
+          fi
+          echo "mc_mujoco ran for 5s without error (exit code: $code)"

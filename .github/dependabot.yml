@@ -1,0 +1,10 @@
+version: 2
+updates:
+  # Keep GitHub Actions versions (actions/checkout@v4, etc.) up to date
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "dependencies"
+      - "github-actions"
