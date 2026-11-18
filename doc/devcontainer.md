@@ -9,22 +9,24 @@ This can be useful if:
 - You wish to deploy multiple superbuild setups on-board the robot computer.
 - You wish to test on a different system than your host machine.
 
-All devcontainer images come pre-built in Github Container Registry: https://ghcr.io/mc-rtc/mc-rtc-superbuild.
+All devcontainer images come pre-built in Github Container Registry: https://ghcr.io/safe-rl-qp/safe-rl-qp-mc-rtc-superbuild (built from this repository by [devcontainer-ci.yaml](../.github/workflows/devcontainer-ci.yaml) on every push to `main`).
 All pre-built images contain:
 - Pre-installed dependencies for all default superbuild projects
 - A pre-generated ccache to speed up compilation. A fresh build of `mc-rtc-superbuild` should only take a few minutes.
-- A nice oh-my-zsh configuration with useful plugins (git, teminal history, etc.)
+- A nice oh-my-zsh configuration with useful plugins (git, teminal history, etc.) and the `mc_build`, `mc_superbuild_config`, `mc_update`, `mc_rviz` and `mc_config` aliases
 - A reasonable default configuration for vscode (see vscode section)
 
 Additionally, `mc-rtc-superbuild` comes with pre-configured `CMakePresets.json` that make working with the superbuild easier (see [building](#building) section).
 
 
-Available images can be pulled from `ghcr.io/mc-rtc/mc-rtc-superbuild:<tag>`:
+Available images can be pulled from `ghcr.io/safe-rl-qp/safe-rl-qp-mc-rtc-superbuild:<tag>`:
 
 | Image | Description | Image URI | Local mount folder | Mounts to (devcontainer) |
 | :--- | :--- | :--- | :--- | :--- |
-| jammy | Ubuntu 22.04 | ghcr.io/mc-rtc/mc-rtc-superbuild:jammy | `$HOME/docker-ws/mc-rtc-superbuild-jammy` | `$HOME/workspace` |
-| noble | Ubuntu 24.04 | ghcr.io/mc-rtc/mc-rtc-superbuild:noble | `$HOME/docker-ws/mc-rtc-superbuild-noble` | `$HOME/workspace` |
+| jammy | Ubuntu 22.04 | ghcr.io/safe-rl-qp/safe-rl-qp-mc-rtc-superbuild:jammy-devcontainer-latest | `$HOME/docker-ws/mc-rtc-superbuild-jammy` | `$HOME/workspace` |
+| noble | Ubuntu 24.04 | ghcr.io/safe-rl-qp/safe-rl-qp-mc-rtc-superbuild:noble-devcontainer-latest | `$HOME/docker-ws/mc-rtc-superbuild-noble` | `$HOME/workspace` |
+
+Ready-to-run images, with everything already built and installed, are also published as `jammy-standalone-release-latest` and `noble-standalone-release-latest`.
 
 By default the devcontainer will attempt to mount the "local mount folder" path specified above to store all files that need to persist after the container has been stopped. In particular, this is where all source code will be stored.
 
@@ -41,7 +43,7 @@ This section contains common instructions that are needed no matter how you inte
 - Install docker from https://docs.docker.com/engine/install/ubuntu/
 - clone `mc-rtc-superbuild`
 ```bash
-git clone git@github.com:mc-rtc/mc-rtc-superbuild.git
+git clone git@github.com:safe-rl-qp/safe-rl-qp-mc-rtc-superbuild.git
 ```
 - Adjust the devcontainer settings to your liking in `.devcontainer/<distro>/devcontainer.json`. In general the default settings will be sufficient. If you wish to do so, you can select a different mount point in the `mounts` property.
 - The devcontainers are configured to automatically forward your `ssh-agent`/`gpg-agent` socket to the devcontainer, so that you can use your ssh keys from within the devcontainer. For this to work, you need to add the following to your `~/.bashrc`:

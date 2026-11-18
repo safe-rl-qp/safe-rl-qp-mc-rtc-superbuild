@@ -15,7 +15,7 @@
   // - Forwards the GPG agent.
   // - Gives access to all usb devices. You need to be in the dialout group on the host.
   //   See https://kb.shawnchen.info/knowledge-base/docker/give-access-to-host-usb-for-serial-device-on-docker-container/ for details
-  "image": "ghcr.io/mc-rtc/mc-rtc-superbuild:jammy-devcontainer-latest",
+  "image": "ghcr.io/safe-rl-qp/safe-rl-qp-mc-rtc-superbuild:jammy-devcontainer-latest",
 
   "mounts": [
     "type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix,consistency=cached",

@@ -299,7 +299,11 @@ Avoid running `make -jN` in the superbuild folder: each project already builds i
 
 ## Using a devcontainer instead
 
-Instead of installing everything on your host, you can build the superbuild inside one of the provided devcontainers (Ubuntu jammy, noble, or resolute, in [.devcontainer/](.devcontainer/)). See [doc/devcontainer.md](doc/devcontainer.md). Note that these devcontainers use the upstream mc-rtc-superbuild images, so you still need to build this superbuild inside the container (see [Build](#build)), and that we only test the native Ubuntu 24.04 install described above.
+Instead of installing everything on your host, you can work inside one of the provided devcontainers (Ubuntu jammy or noble, in [.devcontainer/](.devcontainer/)). See [doc/devcontainer.md](doc/devcontainer.md).
+
+The images are built from this repository and published on every push to `main` (see [devcontainer-ci.yaml](.github/workflows/devcontainer-ci.yaml)), in [ghcr.io/safe-rl-qp/safe-rl-qp-mc-rtc-superbuild](https://github.com/safe-rl-qp/safe-rl-qp-mc-rtc-superbuild/pkgs/container/safe-rl-qp-mc-rtc-superbuild):
+- `<distro>-devcontainer-latest`: all dependencies, the `mc_*` aliases above, and a pre-filled compilation cache. You still build the superbuild inside the container (`mc_build`, see [Build](#build)), but it only takes a few minutes.
+- `<distro>-standalone-release-latest`: everything already built and installed (including H1 and the RL controller), ready to run.
 
 ## Contributing and issues
 

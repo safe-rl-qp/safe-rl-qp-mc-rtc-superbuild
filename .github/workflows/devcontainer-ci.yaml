@@ -1,0 +1,38 @@
+name: Package Devcontainers
+
+# Builds and publishes this fork's images to ghcr.io/safe-rl-qp/safe-rl-qp-mc-rtc-superbuild:
+# - <os>-devcontainer-latest: system packages + pre-filled ccache, used by .devcontainer/<os>
+# - <os>-standalone-release-latest: everything built and installed, ready to run
+on:
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch: {}
+
+# cancel running workflows when pushing to the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  package-devcontainers:
+    strategy:
+      fail-fast: false
+      matrix:
+        # resolute is left out for now
+        os: [jammy, noble]
+    permissions:
+      contents: read
+      packages: write
+    uses: jrl-umi3218/github-actions/.github/workflows/superbuild-devcontainer.yml@0a55369aabf46caaf627828ab68dc161e6f64847
+    with:
+      runner: ubuntu-24.04
+      free-disk-space: true
+      os: ${{ matrix.os }}
+      preset: relwithdebinfo-notests
+      include-preset-in-name: false
+      build-standalone-release: true
+      build-standalone-devel: false
+      build-devcontainer: true
+      container-repository: ghcr.io/safe-rl-qp/safe-rl-qp-mc-rtc-superbuild
+      push: ${{ github.ref == 'refs/heads/main' && github.repository == 'safe-rl-qp/safe-rl-qp-mc-rtc-superbuild' }}
